@@ -1,0 +1,15 @@
+{
+	"name":"twitterstream",
+	"version":"0.0.2",
+	"dependencies":{
+		"express":"",
+		"morgan":"",
+		"body-parser":"",
+		"errorhandler":"",
+		"ntwitter":""
+	},
+	"engines":{
+		"node":"x",
+		"npm":"x"
+	}
+}
