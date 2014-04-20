@@ -1,15 +1,15 @@
 /*jslint node: true*/
+/*global describe, it*/
 'use strict';
 var chai = require('chai'),
 	app = require('../app'),
 	request = require('supertest'),
-	EventEmitter = require('events').EventEmitter;
-
-chai.should();
+	EventEmitter = require('events').EventEmitter,
+	should = chai.should();
 
 describe('app', function () {
-	it('should be defined', function () {
-		app.should.ok;
+	it('should have listen method', function () {
+		should.exist(app.listen);
 	});
 
 	it('should respond /ok', function (done) {
@@ -43,8 +43,8 @@ describe('app', function () {
 
 		app.twitterStreamService = twitterStreamService;
 
-		var expectedBody = ':' + new Array(2049).join(' ')
-			+ '\ndata: {"user":{"time_zone":"Tokyo"},"tweet":123}\n\n';
+		var expectedBody = ':' + new Array(2049).join(' ') +
+			'\ndata: {"user":{"time_zone":"Tokyo"},"tweet":123}\n\n';
 
 		request(app)
 			.get('/sse')

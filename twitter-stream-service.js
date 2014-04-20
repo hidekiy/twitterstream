@@ -40,7 +40,7 @@ TwitterStreamService.prototype.getSampleStream = function getSampleStream(callba
 TwitterStreamService.prototype.updateIdleTimer = function updateIdleTimer() {
 	clearTimeout(this.sampleStreamIdleTimer);
 	this.sampleStreamIdleTimer = setTimeout((function () {
-		if (!sampleStream) { return; }
+		if (!this.sampleStream) { return; }
 
 		console.log('sampleStreamIdleTimer timeout, destroy()');
 		this.sampleStream.destroy();
