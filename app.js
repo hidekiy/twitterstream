@@ -4,54 +4,21 @@ var express = require('express'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	errorHandler = require('errorhandler'),
-	NTwitter = require('ntwitter'),
-	twit = new NTwitter({
-		consumer_key: 'rbMJ6UnFXjTqJZR5ido1w',
-		consumer_secret: process.env.CONSUMER_SECRET,
-		access_token_key: '20168213-17D1AQQzZFkpTfVSaNSk0xpWunN5744ssRzRB03H0',
-		access_token_secret: process.env.ACCESS_TOKEN_SECRET
-	}),
-	sampleStream,
-	sampleStreamIdleTimer,
-	idleTimeout = 10 * 60 * 1000;
+	twitterStreamService = require('./twitter-stream-service');
 
 // for testing:
 // twit.options.stream_base = 'https://broken.stream.twitter.com/1/';
 
-function getSampleStream(callback) {
-	if (sampleStream) {
-		callback(sampleStream);
-		return;
-	}
+module.exports = (function main() {
+	var that = this,
+		app = express();
 
-	console.log('connect to streaming server.');
-	twit.stream('statuses/sample', function (stream) {
-		sampleStream = stream;
-
-		stream.on('missedHeartbeat', function () {
-			console.log('missedHeartbeat, destroy()');
-			stream.destroy();
-			sampleStream = null;
-		});
-
-		callback(stream);
+	app.twitterStreamService = twitterStreamService({
+		consumer_key: 'rbMJ6UnFXjTqJZR5ido1w',
+		consumer_secret: process.env.CONSUMER_SECRET,
+		access_token_key: '20168213-17D1AQQzZFkpTfVSaNSk0xpWunN5744ssRzRB03H0',
+		access_token_secret: process.env.ACCESS_TOKEN_SECRET
 	});
-}
-
-function updateSampleStreamIdleTimer() {
-	clearTimeout(sampleStreamIdleTimer);
-
-	sampleStreamIdleTimer = setTimeout(function () {
-		if (!sampleStream) { return; }
-
-		console.log('sampleStreamIdleTimer timeout, destroy()');
-		sampleStream.destroy();
-		sampleStream = null;
-	}, idleTimeout);
-}
-
-(function main() {
-	var app = express();
 
 	app.use(morgan('dev'));
 	app.use(bodyParser());
@@ -61,14 +28,6 @@ function updateSampleStreamIdleTimer() {
 		next();
 	});
 
-	setInterval(function () {
-		if (sampleStream && sampleStream.listeners('data').length === 0) {
-			console.log('everyone left, destroy()');
-			sampleStream.destroy();
-			sampleStream = null;
-		}
-	}, 1000);
-
 	app.all('/sse', function (req, res, next) {
 		res.header('Cache-Control', 'private, no-cache');
 		res.header('Connection', 'close');
@@ -77,7 +36,7 @@ function updateSampleStreamIdleTimer() {
 
 		console.log('Processing /sse');
 
-		getSampleStream(function (stream) {
+		app.twitterStreamService.getSampleStream(function (stream) {
 			var tweetCount = 0,
 				tweetCountTokyo = 0;
 
@@ -142,7 +101,7 @@ function updateSampleStreamIdleTimer() {
 			// 	this.destroy();
 			// });
 
-			updateSampleStreamIdleTimer();
+			app.twitterStreamService.updateIdleTimer();
 		});
 	});
 
@@ -157,5 +116,5 @@ function updateSampleStreamIdleTimer() {
 
 	app.use(errorHandler({dumpExceptions: true, showStack: true}));
 
-	module.exports = app;
+	return app;
 }());
