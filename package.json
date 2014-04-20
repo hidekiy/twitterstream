@@ -8,8 +8,15 @@
 		"errorhandler":"",
 		"ntwitter":""
 	},
+	"devDependencies":{
+		"mocha":"",
+		"chai":""
+	},
 	"engines":{
 		"node":"x",
 		"npm":"x"
+	},
+	"scripts":{
+		"test":"mocha"
 	}
 }

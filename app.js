@@ -157,7 +157,5 @@ function updateSampleStreamIdleTimer() {
 
 	app.use(errorHandler({dumpExceptions: true, showStack: true}));
 
-	app.listen(process.env.PORT || 3000, function () {
-		console.log('Listening on %j', this.address());
-	});
+	module.exports = app;
 }());
