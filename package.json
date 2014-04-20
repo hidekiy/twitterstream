@@ -10,7 +10,8 @@
 	},
 	"devDependencies":{
 		"mocha":"",
-		"chai":""
+		"chai":"",
+		"supertest":""
 	},
 	"engines":{
 		"node":"x",

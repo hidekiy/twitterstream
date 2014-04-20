@@ -1,12 +1,56 @@
 /*jslint node: true*/
 'use strict';
 var chai = require('chai'),
-	app = require('../app');
+	app = require('../app'),
+	request = require('supertest'),
+	EventEmitter = require('events').EventEmitter;
 
 chai.should();
 
 describe('app', function () {
 	it('should be defined', function () {
 		app.should.ok;
-	})
+	});
+
+	it('should respond /ok', function (done) {
+		request(app)
+			.get('/ok')
+			.expect('Access-Control-Allow-Origin', '*')
+			.expect(200, done);
+	});
+
+	it('should respond /source', function (done) {
+		request(app)
+			.get('/source')
+			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Access-Control-Allow-Origin', '*')
+			.expect(200, done);
+	});
+
+	it('should respond /sse', function (done) {
+		function TwitterStreamService() {}
+		var twitterStreamService = new TwitterStreamService();
+		var stream = new EventEmitter();
+
+		twitterStreamService.getSampleStream = function (cb) {
+			cb(stream);
+			process.nextTick(function () {
+				stream.emit('data', {user: {time_zone: 'Tokyo'}, tweet: 123});
+				stream.emit('destroy');
+			});
+		};
+		twitterStreamService.updateIdleTimer = function () {};
+
+		app.twitterStreamService = twitterStreamService;
+
+		var expectedBody = ':' + new Array(2049).join(' ')
+			+ '\ndata: {"user":{"time_zone":"Tokyo"},"tweet":123}\n\n';
+
+		request(app)
+			.get('/sse')
+			.expect('Content-Type', 'text/event-stream; charset=utf-8')
+			.expect('Cache-Control', 'private, no-cache')
+			.expect('Access-Control-Allow-Origin', '*')
+			.expect(200, expectedBody, done);
+	});
 });
