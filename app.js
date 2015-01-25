@@ -21,7 +21,7 @@ module.exports = (function main() {
 	});
 
 	app.use(morgan('dev'));
-	app.use(bodyParser());
+	app.use(bodyParser.urlencoded({extended: false}));
 	app.use(function (req, res, next) {
 		res.charset = 'utf-8';
 		res.header('Access-Control-Allow-Origin', '*');

@@ -1,12 +1,12 @@
 {
 	"name":"twitterstream",
-	"version":"0.0.2",
+	"version":"1.0.0",
 	"dependencies":{
-		"express":"",
-		"morgan":"",
-		"body-parser":"",
-		"errorhandler":"",
-		"ntwitter":""
+		"express":"latest",
+		"morgan":"latest",
+		"body-parser":"latest",
+		"errorhandler":"latest",
+		"ntwitter":"latest"
 	},
 	"devDependencies":{
 		"mocha":"",
