@@ -9,9 +9,9 @@
 		"ntwitter":"latest"
 	},
 	"devDependencies":{
-		"mocha":"",
-		"chai":"",
-		"supertest":""
+		"mocha":"latest",
+		"chai":"latest",
+		"supertest":"latest"
 	},
 	"engines":{
 		"node":"latest",
