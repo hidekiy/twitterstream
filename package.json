@@ -14,10 +14,11 @@
 		"supertest":""
 	},
 	"engines":{
-		"node":"x",
-		"npm":"x"
+		"node":"latest",
+		"npm":"latest"
 	},
 	"scripts":{
+		"start":"node server.js",
 		"test":"mocha"
 	}
 }
