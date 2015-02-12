@@ -111,7 +111,7 @@ module.exports = (function main() {
 
 	app.get('/source', function (req, res, next) {
 		res.type('txt');
-		res.sendfile(__filename);
+		res.sendFile(__filename);
 	});
 
 	app.use(errorHandler({dumpExceptions: true, showStack: true}));
