@@ -1,4 +1,3 @@
-/*jslint node: true*/
 'use strict';
 var express = require('express'),
 	morgan = require('morgan'),
@@ -10,14 +9,13 @@ var express = require('express'),
 // twit.options.stream_base = 'https://broken.stream.twitter.com/1/';
 
 module.exports = (function main() {
-	var that = this,
-		app = express();
+	var app = express();
 
 	app.twitterStreamService = twitterStreamService({
 		consumer_key: 'rbMJ6UnFXjTqJZR5ido1w',
 		consumer_secret: process.env.CONSUMER_SECRET,
 		access_token_key: '20168213-17D1AQQzZFkpTfVSaNSk0xpWunN5744ssRzRB03H0',
-		access_token_secret: process.env.ACCESS_TOKEN_SECRET
+		access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 	});
 
 	app.use(morgan('dev'));
@@ -45,7 +43,7 @@ module.exports = (function main() {
 					'event: stats\n',
 					'data: ' + JSON.stringify({
 						tweetCount: tweetCount,
-						tweetCountTokyo: tweetCountTokyo
+						tweetCountTokyo: tweetCountTokyo,
 					}),
 					'\n\n',
 					'event: message\n'
@@ -109,7 +107,7 @@ module.exports = (function main() {
 		res.send({ok: true});
 	});
 
-	app.get('/source', function (req, res, next) {
+	app.get('/source', function (req, res) {
 		res.type('txt');
 		res.sendFile(__filename);
 	});
