@@ -9,13 +9,13 @@
     "ntwitter": "^0.5.0"
   },
   "devDependencies": {
-    "chai": "^2.0.0",
+    "chai": "^3.0.0",
     "jshint": "^2.8.0",
     "mocha": "^2.1.0",
-    "supertest": "^0.15.0"
+    "supertest": "^1.0.1"
   },
   "engines": {
-    "node": "latest",
+    "iojs": "latest",
     "npm": "latest"
   },
   "scripts": {
