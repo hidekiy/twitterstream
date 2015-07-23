@@ -38,7 +38,7 @@ module.exports = (function main() {
 			var tweetCount = 0,
 				tweetCountTokyo = 0;
 
-			setInterval(function () {
+			var statsTimer = setInterval(function () {
 				res.write([
 					'event: stats\n',
 					'data: ' + JSON.stringify({
@@ -71,6 +71,7 @@ module.exports = (function main() {
 			}
 
 			function onDestroy() {
+				clearInterval(statsTimer);
 				res.end();
 			}
 
