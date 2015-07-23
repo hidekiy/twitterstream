@@ -89,16 +89,6 @@ module.exports = (function main() {
 				stream.removeListener('destroy', onDestroy);
 			});
 
-
-			// res.on('close', function () {
-			// 	console.log('res close: %j', this.socket.address());
-			// });
-
-			// res.socket.setTimeout(5000, function () {
-			// 	console.log('res socket timeout: %j', this.address());
-			// 	this.destroy();
-			// });
-
 			app.twitterStreamService.updateIdleTimer();
 		});
 	});
