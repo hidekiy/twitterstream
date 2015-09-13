@@ -15,7 +15,7 @@
     "supertest": "^1.0.1"
   },
   "engines": {
-    "iojs": "latest",
+    "node": "latest",
     "npm": "latest"
   },
   "scripts": {
