@@ -12,6 +12,12 @@ describe('app', function () {
 		should.exist(app.listen);
 	});
 
+	it('should respond /', function (done) {
+		request(app)
+			.get('/')
+			.expect(200, done);
+	});
+
 	it('should respond /ok', function (done) {
 		request(app)
 			.get('/ok')

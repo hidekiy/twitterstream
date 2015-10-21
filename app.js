@@ -19,6 +19,7 @@ module.exports = (function main() {
 	});
 
 	app.use(morgan('dev'));
+	app.use(express.static(__dirname + '/public'));
 	app.use(bodyParser.urlencoded({extended: false}));
 	app.use(function (req, res, next) {
 		res.charset = 'utf-8';
@@ -95,7 +96,7 @@ module.exports = (function main() {
 	});
 
 	app.get('/ok', function (req, res) {
-		res.send({ok: true});
+		res.send(true);
 	});
 
 	app.get('/source', function (req, res) {
