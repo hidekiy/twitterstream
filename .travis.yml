@@ -4,6 +4,4 @@ node_js:
   - stable
 deploy:
   provider: heroku
-  api_key:
-    secure: "YNTlLzsRcqaNAdHyYoI/QaXKC1DH+1vrDaIdG5JS7p7gQ/tiYobHHd6Mzxy3MHsy7OUm7E+aoNumTwx/EgRT3ULu4CWxK58qSz9boi1ooqMwlgkDO5mSm0u+KLrVcBYKa9S3OXRu6KgFXma1FptICh5uloYjIIgGgkTn1TXiF8s="
   app: twitterstream-9736
