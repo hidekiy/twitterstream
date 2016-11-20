@@ -4,4 +4,5 @@ node_js:
   - stable
 deploy:
   provider: heroku
+  api_key: ''
   app: twitterstream-9736
