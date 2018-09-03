@@ -37,29 +37,29 @@ module.exports = (function main() {
 
 		app.twitterStreamService.getSampleStream(function (stream) {
 			var tweetCount = 0,
-				tweetCountTokyo = 0;
+				tweetCountJa = 0;
 
 			var statsTimer = setInterval(function () {
 				res.write([
 					'event: stats\n',
 					'data: ' + JSON.stringify({
-						tweetCount: tweetCount,
-						tweetCountTokyo: tweetCountTokyo,
+						tweetCount,
+						tweetCountJa,
 					}),
 					'\n\n',
 					'event: message\n'
 				].join(''));
 
 				tweetCount = 0;
-				tweetCountTokyo = 0;
+				tweetCountJa = 0;
 			}, 10000);
 
 			function onData(data) {
 				tweetCount++;
 
-				if (data.user.time_zone === 'Tokyo') {
-					tweetCountTokyo++;
-					res.write('data: ' + JSON.stringify(data) + '\n\n');
+				if (data.user.lang === 'ja') {
+					tweetCountJa++;
+					res.write(['data: ', JSON.stringify(data), '\n\n'].join(''));
 				}
 			}
 
@@ -77,7 +77,7 @@ module.exports = (function main() {
 			}
 
 			stream.once('data', function () {
-				res.write(':' + new Array(2049).join(' ') + '\n');
+				res.write([':', new Array(2049).join(' '), '\n'].join(''));
 			});
 
 			stream.on('data', onData);
