@@ -65,12 +65,7 @@ p.msg-footer a { color: #555 }
 #loading img,
 #loading span { vertical-align: middle }
 
-/*#msg_container div { border-radius: 8px }
-*/
-
 div.msg-frame { width: 50%; float: left; }
-
-#chart { height: 100px }
 
 #msg_container_a, #msg_container_b { float: left; width: 50%;}
 </style>
@@ -87,13 +82,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 <h1>twitter live streaming</h1>
-<h2>on statuses/sample; tweet.user.time_zone = 'Tokyo'</h2>
+<h2>from statuses/sample (.user.lang = ja)</h2>
 <div id="controller">
 <span id="status"></span>
 <input type="button" id="button_clear" value="clear">
 <input type="button" id="button_stop" value="stop">
 </div>
-<div id="chart"></div>
 <div id="msg_container">
     <div id="msg_container_a"></div>
     <div id="msg_container_b"></div>
@@ -101,7 +95,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <p style="text-align:right">Created by <a href="http://hidekiy.com/" rel="author">hidekiy.com</a>.</p>
 <p style="text-align:right"><a href="http://heroku.com/"><img src="//logos.heroku.com/images/heroku-logo-light-88x31.png" width="88" height="31" alt="Powered by Heroku"></a></p>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://www.google.com/jsapi"></script>
 <script src="eventsource.js"></script>
 <script src="twitter-stream.js"></script>
 </body>

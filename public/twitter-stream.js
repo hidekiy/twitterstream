@@ -150,77 +150,34 @@
 		$('#msg_container > div:gt(1000)').remove();
 	}, 5000);
 
-	google.load("visualization", "1", {packages: ["corechart"]});
-	google.setOnLoadCallback(function () {
-		$('#status').text('Connecting...');
-		$('#msg_container').prepend(
-			$('<p/>', {id: 'loading'})
-				.append($('<img/>', {
-					src: '/static/ajax-loader.gif',
-					width: 32,
-					height: 32
-				}))
-				.append($('<span/>', {text: ' Loading...'}))
-		);
+	$('#status').text('Connecting...');
+	$('#msg_container').prepend(
+		$('<p/>', {id: 'loading'})
+			.append($('<img/>', {
+				src: '/static/ajax-loader.gif',
+				width: 32,
+				height: 32
+			}))
+			.append($('<span/>', {text: ' Loading...'}))
+	);
 
-		var source = new EventSource('/sse');
+	var source = new EventSource('/sse');
 
-		$(source).on('open', function () {
-			$('#status').text('Connected');
-		});
+	$(source).on('open', function () {
+		$('#status').text('Connected');
+	});
 
-		function parseEventData(event) {
-			return JSON.parse(event.originalEvent.data);
-		}
+	function parseEventData(event) {
+		return JSON.parse(event.originalEvent.data);
+	}
 
-		$(source).on('message', function (event) {
-			$('#loading').slideUp();
-			parseTwitterMsg(parseEventData(event));
-		});
+	$(source).on('message', function (event) {
+		$('#loading').slideUp();
+		parseTwitterMsg(parseEventData(event));
+	});
 
-		(function () {
-			var statsArray = [
-				['Seconds', 'Global', 'Tokyo']
-			];
-
-			function reNumber(array) {
-				var lastSeconds = (array.length - 1) * 10;
-
-				for (var i = 1; i < array.length; i++) {
-					array[i][0] = i * 10 - lastSeconds;
-				}
-			}
-
-			function reDraw(array) {
-				(new google.visualization.LineChart($('#chart')[0])).draw(
-					google.visualization.arrayToDataTable(array), {}
-				);
-			}
-
-			$(source).on('stats', function (event) {
-				console.log('stats', event);
-				var stats = parseEventData(event);
-				statsArray.splice(1, 1);
-				statsArray.push([
-					null,
-					stats.tweetCount,
-					stats.tweetCountTokyo
-				]);
-				reNumber(statsArray);
-				reDraw(statsArray);
-			});
-
-
-			for (var i = 0; i < 30; i++) {
-				statsArray.push([null, 0, 0]);
-			}
-			reNumber(statsArray);
-			reDraw(statsArray);
-		}());
-
-		$('#button_stop').click(function () {
-			$('#status').text('Closed');
-			source.close();
-		});
+	$('#button_stop').click(function () {
+		$('#status').text('Closed');
+		source.close();
 	});
 }());
