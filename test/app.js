@@ -41,7 +41,7 @@ describe('app', function () {
 		twitterStreamService.getSampleStream = function (cb) {
 			cb(stream);
 			process.nextTick(function () {
-				stream.emit('data', {user: {time_zone: 'Tokyo'}, tweet: 123});
+				stream.emit('data', {user: {lang: 'ja'}, tweet: 123});
 				stream.emit('destroy');
 			});
 		};
@@ -50,7 +50,7 @@ describe('app', function () {
 		app.twitterStreamService = twitterStreamService;
 
 		var expectedBody = ':' + new Array(2049).join(' ') +
-			'\ndata: {"user":{"time_zone":"Tokyo"},"tweet":123}\n\n';
+			'\ndata: {"user":{"lang":"ja"},"tweet":123}\n\n';
 
 		request(app)
 			.get('/sse')
