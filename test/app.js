@@ -15,12 +15,20 @@ describe('app', function () {
 	it('should respond /', function (done) {
 		request(app)
 			.get('/')
+			.expect('Access-Control-Allow-Origin', '*')
 			.expect(200, done);
 	});
 
-	it('should respond /ok', function (done) {
+	it('should respond /favicon.ico', function (done) {
 		request(app)
-			.get('/ok')
+			.get('/favicon.ico')
+			.expect('Access-Control-Allow-Origin', '*')
+			.expect(200, done);
+	});
+
+	it('should respond /robots.txt', function (done) {
+		request(app)
+			.get('/robots.txt')
 			.expect('Access-Control-Allow-Origin', '*')
 			.expect(200, done);
 	});
