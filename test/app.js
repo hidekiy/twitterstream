@@ -15,7 +15,6 @@ describe('app', function () {
 	it('should respond /', function (done) {
 		request(app)
 			.get('/')
-			.expect('Access-Control-Allow-Origin', '*')
 			.expect(200, done);
 	});
 
