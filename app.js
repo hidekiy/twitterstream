@@ -95,8 +95,8 @@ module.exports = (function main() {
 		});
 	});
 
-	app.get('/ok', function (req, res) {
-		res.send(true);
+	app.get(['/favicon.ico', '/robots.txt'], function (req, res) {
+		res.send();
 	});
 
 	app.get('/source', function (req, res) {
