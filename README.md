@@ -1,2 +1,2 @@
 # twitterstream
-[![Build Status](https://travis-ci.org/hidekiy/twitterstream.svg?branch=master)](https://travis-ci.org/hidekiy/twitterstream)
+[![Node.js CI](https://github.com/hidekiy/twitterstream/actions/workflows/ci.yml/badge.svg)](https://github.com/hidekiy/twitterstream/actions/workflows/ci.yml)
