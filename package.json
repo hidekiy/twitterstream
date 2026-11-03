@@ -2,9 +2,9 @@
   "name": "twitterstream",
   "version": "1.0.0",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.9",
     "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
+    "express": "^4.22.3",
     "morgan": "^1.10.0",
     "newrelic": "^6.5.0",
     "ntwitter": "^0.5.0"
