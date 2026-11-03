@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - stable
-deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-  app: twitterstream-9736
