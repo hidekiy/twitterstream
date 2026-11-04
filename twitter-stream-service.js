@@ -7,7 +7,7 @@ function TwitterStreamService(config) {
 	this.sampleStreamIdleTimer = null;
 	this.idleTimeout = 1000 * 60 * 10;
 
-	setInterval((function () {
+	this.destroyInterval = setInterval((function () {
 		if (this.sampleStream && this.sampleStream.listeners('data').length === 0) {
 			console.log('everyone left, destroy()');
 			this.sampleStream.destroy();
@@ -45,6 +45,14 @@ TwitterStreamService.prototype.updateIdleTimer = function updateIdleTimer() {
 		this.sampleStream.destroy();
 		this.sampleStream = null;
 	}).bind(this), this.idleTimeout);
+};
+
+TwitterStreamService.prototype.close = function close() {
+	clearInterval(this.destroyInterval);
+	if (this.sampleStream) {
+		this.sampleStream.destroy();
+		this.sampleStream = null;
+	}
 };
 
 module.exports = function create(config) {
