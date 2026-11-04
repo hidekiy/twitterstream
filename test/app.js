@@ -1,5 +1,5 @@
 /*jslint node: true*/
-/*global describe, it*/
+/*global before, describe, it*/
 'use strict';
 var chai = require('chai'),
 	app = require('../app'),
@@ -7,7 +7,28 @@ var chai = require('chai'),
 	EventEmitter = require('events').EventEmitter,
 	should = chai.should();
 
+function dummyTwitterStreamService() {
+	function TwitterStreamService() {}
+	var twitterStreamService = new TwitterStreamService();
+	var stream = new EventEmitter();
+
+	twitterStreamService.getSampleStream = function (cb) {
+		cb(stream);
+		process.nextTick(function () {
+			stream.emit('data', {user: {lang: 'ja'}, tweet: 123});
+			stream.emit('destroy');
+		});
+	};
+	twitterStreamService.updateIdleTimer = function () {};
+	return twitterStreamService;
+}
+
 describe('app', function () {
+	before(function () {
+		app.twitterStreamService.close();
+		app.twitterStreamService = dummyTwitterStreamService();
+	});
+
 	it('should have listen method', function () {
 		should.exist(app.listen);
 	});
@@ -41,21 +62,6 @@ describe('app', function () {
 	});
 
 	it('should respond /sse', function (done) {
-		function TwitterStreamService() {}
-		var twitterStreamService = new TwitterStreamService();
-		var stream = new EventEmitter();
-
-		twitterStreamService.getSampleStream = function (cb) {
-			cb(stream);
-			process.nextTick(function () {
-				stream.emit('data', {user: {lang: 'ja'}, tweet: 123});
-				stream.emit('destroy');
-			});
-		};
-		twitterStreamService.updateIdleTimer = function () {};
-
-		app.twitterStreamService = twitterStreamService;
-
 		var expectedBody = ':' + new Array(2049).join(' ') +
 			'\ndata: {"user":{"lang":"ja"},"tweet":123}\n\n';
 
