@@ -2,7 +2,7 @@
 /*global before, describe, it*/
 'use strict';
 var chai = require('chai'),
-	app = require('../app'),
+	app = require('../lib/app'),
 	request = require('supertest'),
 	EventEmitter = require('events').EventEmitter,
 	should = chai.should();

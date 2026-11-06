@@ -4,7 +4,7 @@ if (process.env.NEW_RELIC_LICENSE_KEY) {
 	require('newrelic');
 }
 
-var app = require('./app');
+var app = require('./lib/app');
 
 (function main() {
 	app.listen(process.env.PORT || 3000, function () {
